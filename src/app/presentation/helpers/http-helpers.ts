@@ -1,4 +1,5 @@
 import { InvalidParamError, MissingParamError, NotFoundError, ServerError, UnauthorizedError } from '../errors'
+import { ProblemCompletingError } from '../errors/problem-completing-error'
 import { HttpResponse } from '../protocolos'
 export const serverError = (): HttpResponse => {
   const error = new ServerError()
@@ -62,6 +63,17 @@ export const notAuthorization = (): HttpResponse => {
   const error = new UnauthorizedError()
   return {
     statusCode: 401,
+    body: {
+      name: error.name,
+      message: error.message
+    }
+  }
+}
+
+export const problemCompleting = (): HttpResponse => {
+  const error = new ProblemCompletingError()
+  return {
+    statusCode: 422,
     body: {
       name: error.name,
       message: error.message

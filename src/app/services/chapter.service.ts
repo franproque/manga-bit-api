@@ -10,7 +10,7 @@ export interface AddChapterModel {
   url: string
   number: String
   sequence: number
-  release_date: Date
+  release_date?: Date
   status: string
 }
 

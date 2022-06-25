@@ -35,4 +35,18 @@ export class PageService {
   async update (content: UpdatePageModel): Promise<PageModel> {
     return await pageRepository.update({ id: content.id }, content)
   }
+
+  async addArray (pages: AddPageModel[]): Promise<PageModel[]> {
+    const createdPages: PageModel[] = []
+    for (const page of pages) {
+      createdPages.push(await this.add(page))
+    }
+    return createdPages
+  }
+
+  async deleteArray (pages: PageModel[]): Promise<void> {
+    for (const page of pages) {
+      await this.delete(page.id)
+    }
+  }
 }

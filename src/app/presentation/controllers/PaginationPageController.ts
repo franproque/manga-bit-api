@@ -1,21 +1,21 @@
 import { serverError, success } from '../helpers/http-helpers'
 import { Controller, HttpRequest, HttpResponse } from '../protocolos'
-import { ChapterService } from '../../services/chapter.service'
-const chapterService = new ChapterService()
-export class PaginationChapterController implements Controller {
+import { PageService } from '../../services/page.service'
+const pageService = new PageService()
+export class PaginationPageController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { manga_id } = httpRequest.params
-      const { limit = 50, page = 1 } = httpRequest.query
-      const pagination = await chapterService.pagination({
+      const { chapter_id } = httpRequest.params
+      const { limit = 100, page = 1 } = httpRequest.query
+      const pagination = await pageService.pagination({
         limit: parseInt(limit),
-        model: 'chapter',
+        model: 'page',
         page: parseInt(page),
         search: [
           {
-            param: 'manga_id',
+            param: 'chapter_id',
             type: 'equal',
-            value: manga_id
+            value: chapter_id
           }
         ]
       })
